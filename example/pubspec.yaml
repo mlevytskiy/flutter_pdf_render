@@ -12,20 +12,21 @@ dependencies:
   flutter:
     sdk: flutter
 
-  pdf_render:
-    # When depending on this package from a real application you should use:
-    #   pdf_render: ^x.y.z
-    # See https://dart.dev/tools/pub/dependencies#version-constraints
-    # The example app is bundled with the plugin so we use a path dependency on
-    # the parent directory to use the current plugin's version.
-    path: ../
-  # For macOS, it does not open asset files; the example uses network for loading PDF file
-  flutter_cache_manager: ^3.3.0
+  pdf_render: ^1.4.7
+#    # When depending on this package from a real application you should use:
+#    #   pdf_render: ^x.y.z
+#    # See https://dart.dev/tools/pub/dependencies#version-constraints
+#    # The example app is bundled with the plugin so we use a path dependency on
+#    # the parent directory to use the current plugin's version.
+#    path: ../
+#  # For macOS, it does not open asset files; the example uses network for loading PDF file
+  flutter_cache_manager: ^3.3.2
 
 dev_dependencies:
-  flutter_lints: ^2.0.1
-  flutter_test:
-    sdk: flutter
+  flutter_lints: ^4.0.0
+  collection:
+#  flutter_test:
+#    sdk: flutter
 
 # dependency_overrides:
 #   platform: 3.1.0

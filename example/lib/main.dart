@@ -1,7 +1,7 @@
 import 'dart:io';
+import 'dart:ui';
 
-import 'package:flutter/foundation.dart'
-    show kIsWeb; // for checking whether running on Web or not
+import 'package:flutter/foundation.dart' show kIsWeb; // for checking whether running on Web or not
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:pdf_render/pdf_render.dart';
@@ -34,9 +34,8 @@ class _MyAppState extends State<MyApp> {
           title: ValueListenableBuilder<Matrix4>(
               // The controller is compatible with ValueListenable<Matrix4> and you can receive notifications on scrolling and zooming of the view.
               valueListenable: controller,
-              builder: (context, _, child) => Text(controller.isReady
-                  ? 'Page #${controller.currentPageNumber}'
-                  : 'Page -')),
+              builder: (context, _, child) =>
+                  Text(controller.isReady ? 'Page #${controller.currentPageNumber}' : 'Page -')),
         ),
         backgroundColor: Colors.grey,
         body: GestureDetector(
@@ -58,17 +57,23 @@ class _MyAppState extends State<MyApp> {
                   params: const PdfViewerParams(
                     padding: 10,
                     minScale: 1.0,
+                    scaleEnabled: false,
                     // scrollDirection: Axis.horizontal,
                   ),
                 )
-              : PdfViewer.openAsset(
-                  'assets/hello.pdf',
-                  viewerController: controller,
-                  onError: (err) => print(err),
-                  params: const PdfViewerParams(
-                    padding: 10,
-                    minScale: 1.0,
-                    // scrollDirection: Axis.horizontal,
+              : ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(context).copyWith(
+                      dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.trackpad, PointerDeviceKind.mouse}),
+                  child: PdfViewer.openAsset(
+                    'assets/hello.pdf',
+                    viewerController: controller,
+                    onError: (err) => print(err),
+                    params: const PdfViewerParams(
+                      padding: 10,
+                      minScale: 1.0,
+                      scaleEnabled: false,
+                      // scrollDirection: Axis.horizontal,
+                    ),
                   ),
                 ),
         ),
@@ -81,8 +86,7 @@ class _MyAppState extends State<MyApp> {
             ),
             FloatingActionButton(
               child: const Icon(Icons.last_page),
-              onPressed: () =>
-                  controller.ready?.goToPage(pageNumber: controller.pageCount),
+              onPressed: () => controller.ready?.goToPage(pageNumber: controller.pageCount),
             ),
             FloatingActionButton(
               child: const Icon(Icons.bug_report),
@@ -98,8 +102,8 @@ class _MyAppState extends State<MyApp> {
   Future<void> rendererTest() async {
     final PdfDocument doc;
     if (!kIsWeb && Platform.isMacOS) {
-      final file = (await DefaultCacheManager().getSingleFile(
-              'https://github.com/espresso3389/flutter_pdf_render/raw/master/example/assets/hello.pdf'))
+      final file = (await DefaultCacheManager()
+              .getSingleFile('https://github.com/espresso3389/flutter_pdf_render/raw/master/example/assets/hello.pdf'))
           .path;
       doc = await PdfDocument.openFile(file);
     } else {
@@ -109,8 +113,7 @@ class _MyAppState extends State<MyApp> {
     try {
       final page = await doc.getPage(1);
       final image = await page.render();
-      print(
-          '${image.width}x${image.height}: ${image.pixels.lengthInBytes} bytes.');
+      print('${image.width}x${image.height}: ${image.pixels.lengthInBytes} bytes.');
     } finally {
       doc.dispose();
     }

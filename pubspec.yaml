@@ -9,7 +9,7 @@ environment:
   flutter: ">=1.20.0"
 
 dependencies:
-  collection: ^1.18.0
+  collection:
   flutter:
     sdk: flutter
   flutter_web_plugins:
@@ -20,12 +20,16 @@ dependencies:
 
 dev_dependencies:
   flutter_lints: ^2.0.3
-  flutter_test:
-    sdk: flutter
+#  flutter_test:
+#    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
+
+dependency_overrides:
+  collection:
+
 flutter:
   # This section identifies this Flutter project as a plugin project.
   # The 'pluginClass' and Android 'package' identifiers should not ordinarily
